@@ -28,9 +28,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    
    esperar a que muestre el mensaje:
    
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ----------------------------------------------------------------------------------`
    `[INFO] BUILD SUCCESS`
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ----------------------------------------------------------------------------------`
    
 2. Ingresar a la carpeta `com.ctr.iii.dao`, ahi ejecutar el siguiente comando de maven:
    
@@ -38,9 +38,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    
    esperar a que muestre el mensaje:
    
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ----------------------------------------------------------------------------------`
    `[INFO] BUILD SUCCESS`
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ----------------------------------------------------------------------------------`
 
 3. Ingresar a la carpeta `com.ctr.iii.servicio`, ahi ejecutar el siguiente comando de maven:
    
@@ -58,9 +58,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    
    esperar a que muestre el mensaje:
    
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ----------------------------------------------------------------------------------`
    `[INFO] BUILD SUCCESS`
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ----------------------------------------------------------------------------------`
 
     Desplegar desde la carpeta `com.ctr.iii.servicio.web`, con el siguiente comando de maven:
    
