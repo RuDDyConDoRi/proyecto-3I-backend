@@ -7,11 +7,22 @@
   `java version "1.7.0"`
 
 * Instalar y configurar MAVEN version 3.0 o superior, revisar la instalacion:
+
   `$> mvn --version`
   `Apache Maven 3.5.0 (ff8ff6095c62210b5713f426; 2017-04-03T15:39:06-   04:00)`
   `java version "1.7.0"`
 
-* Tener `mySql`, corriendo en el puerto `3306` con el usuario `root` y el password en blanco.
+* Tener `mySql`, corriendo en el puerto `3306` con el usuario `root` y el password `root`.
+
+  crear la base de datos `plaproc`, luego importar el backup `db_iii.sql`
+    
+* Para iniciar `Jade` necesitamos el siguiente archivo:
+
+  `$ ruta_carpeta_jade> lib/jade.jar`
+
+  luego iniciar `Jade`:
+  
+  `$> ruta_carpeta_jade> java -cp .\lib\jade.jar jade.Boot -gui`
 
 ## 
 ###### Pasos para ejecutar el servicio REST 
@@ -28,9 +39,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    
    esperar a que muestre el mensaje:
    
-   `[INFO] ----------------------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
    `[INFO] BUILD SUCCESS`
-   `[INFO] ----------------------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
    
 2. Ingresar a la carpeta `com.ctr.iii.dao`, ahi ejecutar el siguiente comando de maven:
    
@@ -38,9 +49,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    
    esperar a que muestre el mensaje:
    
-   `[INFO] ----------------------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
    `[INFO] BUILD SUCCESS`
-   `[INFO] ----------------------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
 
 3. Ingresar a la carpeta `com.ctr.iii.servicio`, ahi ejecutar el siguiente comando de maven:
    
@@ -48,9 +59,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    
    esperar a que muestre el mensaje:
    
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
    `[INFO] BUILD SUCCESS`
-   `[INFO] ----------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
 
 4. Ingresar a la carpeta `com.ctr.iii.servicio.web`, ahi ejecutar el siguiente comando de maven:
    
@@ -58,9 +69,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    
    esperar a que muestre el mensaje:
    
-   `[INFO] ----------------------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
    `[INFO] BUILD SUCCESS`
-   `[INFO] ----------------------------------------------------------------------------------`
+   `[INFO] ------------------------------------------------------------------------------------------`
 
     Desplegar desde la carpeta `com.ctr.iii.servicio.web`, con el siguiente comando de maven:
    
@@ -69,7 +80,9 @@ Ingresar a la carpeta `proyecto-3I-backend`, ahi se encuentran las siguientes ca
    esperar a que muestre el mensaje:
    
    `[INFO] Started ServerConnector@4ce8ca9f{HTTP/1.1}{localhost:8080}`
+   
    `[INFO] Started Jetty Server`
+   
    `[INFO] Starting scanner at interval of 10 seconds.`
 
 	Verificar el servicio REST ingresando a la direccion:
