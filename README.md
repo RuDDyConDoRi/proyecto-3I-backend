@@ -4,12 +4,15 @@
 * Instalar y configurar el jdk de java version 1.7 o superior, revisar la instalacion desde su terminal:
   
   `$> java -version`
+  
   `java version "1.7.0"`
 
 * Instalar y configurar MAVEN version 3.0 o superior, revisar la instalacion:
 
   `$> mvn --version`
+  
   `Apache Maven 3.5.0 (ff8ff6095c62210b5713f426; 2017-04-03T15:39:06-   04:00)`
+  
   `java version "1.7.0"`
 
 * Tener `mySql`, corriendo en el puerto `3306` con el usuario `root` y el password `root`.
