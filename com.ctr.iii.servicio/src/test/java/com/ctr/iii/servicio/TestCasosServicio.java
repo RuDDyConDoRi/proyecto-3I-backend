@@ -34,8 +34,8 @@ public class TestCasosServicio {
 	private final static Logger logger = LoggerFactory.getLogger(TestCasosServicio.class);
 
 	@Test
-	public void recuperarUsuariosTest() {
-		logger.info("Ingresa || recuperarUsuariosTest");
+	public void recuperarCasosTest() {
+		logger.info("Ingresa || recuperarCasosTest");
 		
 		// preparamos prueba
 		
@@ -48,7 +48,7 @@ public class TestCasosServicio {
 		Assert.assertTrue(resultado.isOk());
 		logger.info("Existen Resultado= " + resultado);
 
-		logger.info("Salir || recuperarUsuariosTest");
+		logger.info("Salir || recuperarCasosTest");
 	}
 
 }

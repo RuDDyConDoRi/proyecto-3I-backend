@@ -25,7 +25,7 @@
 
   luego iniciar `Jade`:
   
-  `$> ruta_carpeta_jade> java -cp .\lib\jade.jar jade.Boot -gui`
+  `$> ruta_carpeta_jade> java -jar .\AgentesInteligentes.jar -gui AgenteCierre:agentes.AgenteCierre`
 
 ## 
 ###### Pasos para ejecutar el servicio REST 

@@ -23,6 +23,9 @@ public class CasosTest {
 	
 	@Autowired 
 	CasoDao casosDao;
+	
+	@Autowired
+	PiezaProcesalDao piezaProcesalDao;
 		
 	private final static Logger logger = LoggerFactory.getLogger(CasosTest.class);
 	
@@ -31,6 +34,8 @@ public class CasosTest {
 		logger.info("testProbar||Ingresa");
 		
 		logger.info("Casos ====> " + casosDao.findAll());
+		
+		logger.info("Pieza Procesal ====> " + piezaProcesalDao.findAll());
 		
 		logger.info("testProbar||Sale");
 	}

@@ -15,6 +15,14 @@
 		<ch.qos.logback.version>0.9.24</ch.qos.logback.version>
 		<com.fasterxml.jackson.version>2.2.3</com.fasterxml.jackson.version>
 	</properties>
+	
+	<repositories>
+		<repository>
+			<id>tilab</id>
+			<url>http://jade.tilab.com/maven/</url>
+		</repository>
+
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -118,6 +126,11 @@
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tilab.jade</groupId>
+			<artifactId>jade</artifactId>
+			<version>4.5.0</version>
 		</dependency>
 		
 	</dependencies>
