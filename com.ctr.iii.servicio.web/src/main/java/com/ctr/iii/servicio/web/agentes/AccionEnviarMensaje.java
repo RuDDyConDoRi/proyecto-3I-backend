@@ -1,31 +1,12 @@
 package com.ctr.iii.servicio.web.agentes;
 
+import com.ctr.iii.servicio.web.dto.DatosCierreDto;
+import jade.wrapper.gateway.JadeGateway;
+
 /**
 *
 * @author RuDDy
 */
-
-/**
-* ***************************************************************
-*
-* La clase AccionEnviarMensaje sale fuera del servlet y envía el mensaje al
-* AgenteGateWay
-*
-****************************************************************
-*/
-import jade.wrapper.gateway.JadeGateway;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.ctr.iii.servicio.web.dto.DatosCierreDto;
-
-//import mensaje.Mensaje;
 
 public class AccionEnviarMensaje implements Accion {
 
@@ -33,20 +14,22 @@ public class AccionEnviarMensaje implements Accion {
 
 		// creamos un mensaje con un destinatario y contenido predefinido
 		System.out.println("creamos un mensaje con un destinatario y contenido predefinido");
+		
 		Mensaje mensaje = new Mensaje();
-		mensaje.setReceiver("AgenteCierre");
+		mensaje.setReceiver("AgenteResolutorCierre");
 		mensaje.setMessage("== Agente genere un arbol de desicion para estos datos ==");
 		mensaje.setDatosCierre(datosCierre);
+		mensaje.setAtributos(datosCierre.getAtributos().toString());
+        mensaje.setTabla(datosCierre.getTabla().toString());
 
 		try {
-			// accedemos a JADE via JadeGateWay e esperamos la contestación
+			// accedemos a JADE via JadeGateWay e esperamos la contestacion
 			JadeGateway.execute(mensaje);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		// creamos la salida
-		// response.setContentType("text/html");
 		response.setMessage(mensaje.toString());
 		System.out.println("--MENSAJE--> "+ mensaje.toString());
 

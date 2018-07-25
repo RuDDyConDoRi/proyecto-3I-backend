@@ -1,13 +1,9 @@
 package com.ctr.iii.servicio.web.agentes;
 
 import jade.core.AID;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.AMSService;
-import jade.domain.FIPAAgentManagement.AMSAgentDescription;
-import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.lang.acl.ACLMessage;
-import jade.wrapper.gateway.*;
+import jade.wrapper.gateway.GatewayAgent;
 
 /**
  *
@@ -18,8 +14,7 @@ public class AgenteCierreGateWay extends GatewayAgent {
 
 	Mensaje mensaje = null;
 
-	// método que se ejecuta cuando se invoca JadeGateWay.execute(objeto) en el
-	// servlet
+	// metodo que se ejecuta cuando se invoca JadeGateWay.execute(objeto) 
 	protected void processCommand(java.lang.Object obj) {
 
 		if (obj instanceof Mensaje) {
@@ -29,13 +24,16 @@ public class AgenteCierreGateWay extends GatewayAgent {
 			ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
 			msg.addReceiver(new AID(mensaje.getReceiver(), AID.ISLOCALNAME));
 			msg.setContent(mensaje.getMessage());
+			System.out.println("====> ATRIBUTOS: " + mensaje.getAtributos() + " === " + mensaje.getTabla());
+			msg.addUserDefinedParameter("atributos", mensaje.getAtributos());
+			msg.addUserDefinedParameter("tabla", mensaje.getTabla());
 			send(msg);
 		}
 
 	}
 
 	public void setup() {
-		// Es perando por la respuesta de AgenteSaludo
+		
 		addBehaviour(new CyclicBehaviour(this) {
 			public void action() {
 
@@ -43,7 +41,11 @@ public class AgenteCierreGateWay extends GatewayAgent {
 
 				if ((msg != null) && (mensaje != null)) {
 					mensaje.setMessage(msg.getContent());
-					// se devuelve la respuesta en el objeto mensaje al servlet
+					mensaje.setDatosCierre(null);
+					mensaje.setAtributos(msg.getUserDefinedParameter("Atributos"));
+					mensaje.setValores(msg.getUserDefinedParameter("Valores"));
+					mensaje.setTabla(null);
+
 					releaseCommand(mensaje);
 				} else {
 					block();

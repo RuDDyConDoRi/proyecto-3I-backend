@@ -1,41 +1,43 @@
 package com.ctr.iii.servicio.web.dto;
 
+import java.util.List;
+
 /**
  *
  * @author RuDDy
  */
 public class DatosCierreDto {
 
-	String[] atributos;
-	String[][] tabla;
+	List<String> atributos;
+	List<List<String>> tabla;
 
 	public DatosCierreDto() {
 	}
 
-	public DatosCierreDto(String[] atributos, String[][] tabla) {
+	public DatosCierreDto(List<String> atributos, List<List<String>> tabla) {
 		this.atributos = atributos;
 		this.tabla = tabla;
 	}
 
-	public String[] getAtributos() {
+	public List<String> getAtributos() {
 		return atributos;
 	}
 
-	public void setAtributos(String[] atributos) {
+	public void setAtributos(List<String> atributos) {
 		this.atributos = atributos;
 	}
 
-	public String[][] getTabla() {
+	public List<List<String>> getTabla() {
 		return tabla;
 	}
 
-	public void setTabla(String[][] tabla) {
+	public void setTabla(List<List<String>> tabla) {
 		this.tabla = tabla;
 	}
 
 	@Override
 	public String toString() {
-		return "DatosCierreDto{" + "atributos=" + atributos.toString() + ", tabla=" + tabla.toString() + '}';
+		return "DatosCierreDto [atributos=" + atributos + ", tabla=" + tabla + "]";
 	}
 
 }

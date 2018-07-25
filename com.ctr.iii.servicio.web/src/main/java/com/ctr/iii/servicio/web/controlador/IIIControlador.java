@@ -17,8 +17,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.ctr.iii.servicio.ICasosServicio;
+import com.ctr.iii.servicio.respuesta.ResDatosCierre;
 import com.ctr.iii.servicio.respuesta.ResRecuperarCasos;
+import com.ctr.iii.servicio.respuesta.ResRecuperarElemConv;
+import com.ctr.iii.servicio.respuesta.Utilidades;
 import com.ctr.iii.servicio.solicitud.SolRecuperarCasos;
+import com.ctr.iii.servicio.solicitud.SolRecuperarElemConv;
 import com.ctr.iii.servicio.web.agentes.Accion;
 import com.ctr.iii.servicio.web.agentes.AccionEnviarMensaje;
 import com.ctr.iii.servicio.web.agentes.Mensaje;
@@ -40,101 +44,103 @@ public class IIIControlador {
 
 	@Autowired
 	ICasosServicio casosServicio;
-	
-	
+
 	/************************************ CasosServicio ***********************************************************/
 	@RequestMapping(value = "/recuperar/casos", method = RequestMethod.GET, headers = "Accept=application/json")
 	public ResRecuperarCasos recuperarCasos() {
 		logger.info("Ingresa||recuperarCasos");
 
 		SolRecuperarCasos solicitud = new SolRecuperarCasos();
-		
+
 		logger.info("Solicitud: ", solicitud);
 		ResRecuperarCasos resultado = casosServicio.recuperarCasos(solicitud);
 
 		logger.info("Sale||recuperarCasos");
 		return resultado;
 	}
-	
+
 	@RequestMapping(value = "/iniciar/agente", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<CasoPP> iniciarAgente() {
 		logger.info("Ingresa||iniciarAgente");
-		
-		JadeGateway.init("com.ctr.iii.servicio.web.agentes.AgenteControlPlazosProcesales", 
-                new jade.util.leap.Properties());
-		
+
+		JadeGateway.init("com.ctr.iii.servicio.web.agentes.AgenteControlPlazosProcesales",
+				new jade.util.leap.Properties());
+
 		List<CasoPP> casosPP = new ArrayList<CasoPP>();
-        casosPP.add(new CasoPP(1, "Corrupcion", "COD-C001-23042018", "Rigoberto Rigus"));
-        casosPP.add(new CasoPP(2, "Robo", "COD-R001-21042018", "Romer Vale"));
-        casosPP.add(new CasoPP(3, "Racismo", "COD-RA01-20042018", "Juan Mark"));
-        casosPP.add(new CasoPP(4, "Discriminacion", "COD-D001-22042018", "Joe Huarachi"));
-        casosPP.add(new CasoPP(5, "Asesinato", "COD-A001-20042018", "Maure Lozano"));
-        
-        //String nombreAccion = request.getParameter("accion");
-        
-        CasoPP casoPP = new CasoPP();
-        casoPP.setCodigoCaso("CASO-001");
-        //request.getParameter("caso"));
-        //usuario.setContraseña(request.getParameter("contrasena"));
-        //mandamos el usuario al agente GateWayAgent de JADE
-        try    {
-            JadeGateway.execute(casoPP);
-        } catch(Exception e) { 
-        	e.printStackTrace(); 
-        }
-        
-        casosPP.add(casoPP);
-		
+		casosPP.add(new CasoPP(1, "Corrupcion", "COD-C001-23042018", "Rigoberto Rigus"));
+		casosPP.add(new CasoPP(2, "Robo", "COD-R001-21042018", "Romer Vale"));
+		casosPP.add(new CasoPP(3, "Racismo", "COD-RA01-20042018", "Juan Mark"));
+		casosPP.add(new CasoPP(4, "Discriminacion", "COD-D001-22042018", "Joe Huarachi"));
+		casosPP.add(new CasoPP(5, "Asesinato", "COD-A001-20042018", "Maure Lozano"));
+
+		// String nombreAccion = request.getParameter("accion");
+
+		CasoPP casoPP = new CasoPP();
+		casoPP.setCodigoCaso("CASO-001");
+		// request.getParameter("caso"));
+		// usuario.setContraseï¿½a(request.getParameter("contrasena"));
+		// mandamos el usuario al agente GateWayAgent de JADE
+		try {
+			JadeGateway.execute(casoPP);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		casosPP.add(casoPP);
+
 		logger.info("Sale||iniciarAgente");
 		return casosPP;
 	}
-		
-	@RequestMapping(value = "/agente/cierre", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Mensaje iniciarAgenteCierre() {
+
+	@RequestMapping(value = "/agente/cierre", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResDatosCierre iniciarAgenteCierre(@RequestBody SolRecuperarElemConv solicitud) {
 		logger.info("Ingresa||iniciarAgenteCierre");
-		
-		Hashtable acciones = null; 
+
+		ResDatosCierre resultado = new ResDatosCierre();
+		ResRecuperarElemConv elementosCierre = casosServicio.recuperarElemConv(solicitud);
+		logger.info("========> " + solicitud.getAtributos().length + " == " + solicitud.getTabla().length);
+
+		Hashtable acciones = new Hashtable();
+		acciones.put("enviarmensaje", new AccionEnviarMensaje());
+
 		Properties propiedades = new Properties();
-        propiedades.setProperty("container", "Main-Container");
+		propiedades.setProperty("container", "Main-Container");
+		// enlace con el agente GateWay de JADE
+		JadeGateway.init("com.ctr.iii.servicio.web.agentes.AgenteCierreGateWay", propiedades);
 
-        //creación de la tabla hash que contendrá el objeto AccionEnviarMensaje
-        acciones = new Hashtable();
+		DatosCierreDto datosCierre = new DatosCierreDto();
+		List<String> nombreAtri = new ArrayList<String>();
+		for (int i = 0; i < solicitud.getAtributos().length; i++) {
+			nombreAtri.add(solicitud.getAtributos()[i]);
+		}
+		datosCierre.setAtributos(nombreAtri);
 
-        //insertamos el objeto con clave su clave en la tabla
-        acciones.put("enviarmensaje", new AccionEnviarMensaje());
-        
-        //enlace con el agente GateWay de JADE
-        JadeGateway.init("com.ctr.iii.servicio.web.agentes.AgenteCierreGateWay", propiedades);
-		
-		
-        //String nombreAccion = request.getParameter("accion");
-        
-        String nombreAccion = "enviarmensaje";
+		List<List<String>> tabla = new ArrayList<List<String>>();
+		String[][] tablaDatos = solicitud.getTabla();
+		for (int i = 0; i < tablaDatos.length; i++) {
+			List<String> lista = new ArrayList<String>();
+			for (int j = 0; j < tablaDatos[i].length; j++) {
+				lista.add(tablaDatos[i][j]);
+			}
+			tabla.add(lista);
+		}
 
-        //hacemos que el objeto implemente la interfaz acción
-        //para que pueda utilizar los objetos HttpServletRequest y HttpServletResponse
-        Mensaje mensaje = new Mensaje();
-        DatosCierreDto datosCierre = new DatosCierreDto();
-        String[] nombreAtri = {"Ruta", "Empresa", "Tiempo", "Distancia", "Prisa"};
-        datosCierre.setAtributos(nombreAtri);
-        String[][] tabla = {{"2S", "A", "20", "05", "SI", "SI"},
-                {"03", "B", "30", "10", "SI", "NO"},
-                {"2S", "A", "10", "15", "SI", "SI"},
-                {"4B", "C", "20", "10", "NO", "SI"},
-                {"03", "B", "20", "05", "SI", "SI"},
-                {"4B", "A", "30", "15", "SI", "NO"},
-                {"03", "B", "10", "30", "SI", "NO"}};
-        datosCierre.setTabla(tabla);
-        
-        Accion accion = (Accion) acciones.get(nombreAccion);
-        if (accion != null) {
-        	//ejecutamos la acción
-            accion.enviar(mensaje, datosCierre);
-            
-            System.out.println("--> "+mensaje.getMessage());
-        }
-        
+		datosCierre.setTabla(tabla);
+
+		Mensaje mensaje = new Mensaje();
+		mensaje.setDatosCierre(datosCierre);
+
+		Accion accion = (Accion) acciones.get("enviarmensaje");
+		if (accion != null) {
+			accion.enviar(mensaje, datosCierre);
+
+			resultado.setAtributos(Utilidades.aCadenas(mensaje.getMessage().split(";")[1], ","));
+			resultado.setValores(Utilidades.aDouble(mensaje.getMessage().split(";")[2].replaceAll("}]", "}"), ","));
+			resultado.setRespuesta(mensaje.getMessage());
+			resultado.setOk(true);
+		}
+
 		logger.info("Sale||iniciarAgenteCierre");
-		return mensaje;
+		return resultado;
 	}
 }
